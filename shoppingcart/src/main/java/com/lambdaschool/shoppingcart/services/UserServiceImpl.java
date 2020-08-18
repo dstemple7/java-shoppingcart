@@ -26,6 +26,23 @@ public class UserServiceImpl
     private CartService cartService;
 
     @Override
+    public List<User> findByNameContaining(String username)
+    {
+        return userrepos.findByUsernameContainingIgnoreCase(username.toLowerCase());
+    }
+
+    @Override
+    public User findByName(String name)
+    {
+        User uu = userrepos.findByUsername(name.toLowerCase());
+        if (uu == null)
+        {
+            throw new ResourceNotFoundException("User name " + name + " not found!");
+        }
+        return uu;
+    }
+
+    @Override
     public List<User> findAll()
     {
         List<User> list = new ArrayList<>();
